@@ -185,11 +185,19 @@ class rsyslog::params {
       $omit_local_logging     = false
     }
     freebsd: {
-      $rsyslog_package_name   = 'sysutils/rsyslog5'
-      $relp_package_name      = 'sysutils/rsyslog5-relp'
-      $mysql_package_name     = 'sysutils/rsyslog5-mysql'
-      $pgsql_package_name     = 'sysutils/rsyslog5-pgsql'
-      $gnutls_package_name    = 'sysutils/rsyslog5-gnutls'
+      if versioncmp($::operatingsystemrelease, '9') < 0 {
+        $rsyslog_package_name   = 'sysutils/rsyslog5'
+        $relp_package_name      = 'sysutils/rsyslog5-relp'
+        $mysql_package_name     = 'sysutils/rsyslog5-mysql'
+        $pgsql_package_name     = 'sysutils/rsyslog5-pgsql'
+        $gnutls_package_name    = 'sysutils/rsyslog5-gnutls'
+      } else {
+        $rsyslog_package_name   = 'sysutils/rsyslog'
+        $relp_package_name      = 'sysutils/rsyslog'
+        $mysql_package_name     = 'sysutils/rsyslog'
+        $pgsql_package_name     = 'sysutils/rsyslog'
+        $gnutls_package_name    = 'sysutils/rsyslog'
+      }
       $package_status         = 'present'
       $rsyslog_d              = '/etc/syslog.d/'
       $rsyslog_conf           = '/etc/syslog.conf'
